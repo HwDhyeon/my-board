@@ -4,7 +4,10 @@ const userStatus = createSlice({
   name: 'UserStatusReducer',
   initialState: {
     isLoggedIn: false,
-    user: null,
+    user: {
+      name: null,
+      email: null,
+    },
   },
   reducers: {
     login: (state, action) => {

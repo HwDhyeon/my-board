@@ -2,50 +2,37 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { login } from '../app/store';
+import RegisterForm from '../components/RegisterForm';
 
 const Register = ({ isLoggedIn, toLogin }) => {
   const [userName, setUserName] = useState('');
-  const [userId, setUserId] = useState('');
-  const [userPw, setuserPw] = useState('');
+  const [userEmail, setUserEmail] = useState('');
+  const [userPassword, setUserPassword] = useState('');
 
   const onChangeUserName = (event) => setUserName(event.target.value);
-  const onChangeUserId = (event) => setUserId(event.target.value);
-  const onChangeUserPw = (event) => setuserPw(event.target.value);
+  const onChangeUserEmail = (event) => setUserEmail(event.target.value);
+  const onChangeUserPassword = (event) => setUserPassword(event.target.value);
 
   const onSubmit = (event) => {
     event.preventDefault();
-    toLogin(userId);
+    toLogin(userName);
+    setUserEmail('');
     setUserName('');
-    setUserId('');
-    setuserPw('');
+    setUserPassword('');
   };
 
   return isLoggedIn ? (
     <Redirect to="/" />
   ) : (
-    <div>
-      <form onSubmit={onSubmit}>
-        <input
-          type="text"
-          id="username"
-          onChange={onChangeUserName}
-          value={userName}
-        />
-        <input
-          type="text"
-          id="user_id"
-          onChange={onChangeUserId}
-          value={userId}
-        />
-        <input
-          type="password"
-          id="user_pw"
-          onChange={onChangeUserPw}
-          value={userPw}
-        />
-        <button type="submit">회원가입</button>
-      </form>
-    </div>
+    <RegisterForm
+      userName={userName}
+      userEmail={userEmail}
+      userPassword={userPassword}
+      onChangeUserName={onChangeUserName}
+      onChangeUserEmail={onChangeUserEmail}
+      onChangeUserPassword={onChangeUserPassword}
+      onSubmit={onSubmit}
+    />
   );
 };
 

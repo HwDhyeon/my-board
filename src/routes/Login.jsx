@@ -1,48 +1,63 @@
 import React, { useState } from 'react';
+import { Card, Col, Container, Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
+import styled from 'styled-components';
 import { login } from '../app/store';
+import LoginForm from '../components/LoginForm';
 
 const Login = ({ isLoggedIn, toLogin }) => {
-  const [id, setId] = useState('');
-  const [pw, setPw] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  const onChangeId = (event) => setId(event.target.value);
-  const onChangePw = (event) => setPw(event.target.value);
+  const onChangeEmail = (event) => setEmail(event.target.value);
+  const onChangePassword = (event) => setPassword(event.target.value);
 
   const onSubmit = (event) => {
     event.preventDefault();
-    toLogin(id);
-    setId('');
-    setPw('');
+    toLogin(email);
+    setEmail('');
+    setPassword('');
   };
 
   return isLoggedIn ? (
     <Redirect to="/" />
   ) : (
-    <div>
-      <h1>Login form</h1>
-      <form onSubmit={onSubmit}>
-        <input
-          type="text"
-          placeholder="아이디를 입력해주세요"
-          onChange={onChangeId}
-          value={id}
-        />
-        <input
-          type="password"
-          placeholder="패스워드를 입력해주세요"
-          onChange={onChangePw}
-          value={pw}
-        />
-        <button type="submit">Login</button>
-      </form>
-      <Link to="/register">
-        <span>회원가입하기</span>
-      </Link>
-    </div>
+    <Container>
+      <Row>
+        <Col xs={1} md={3} />
+        <Col xs={10} md={6}>
+          <Card
+            body
+            style={{
+              marginTop: '1rem',
+              borderRadius: '10px',
+              borderWidth: '3px',
+            }}
+          >
+            <h3>My Board</h3>
+            <h5>게시판입니다.</h5>
+            <LoginForm
+              email={email}
+              password={password}
+              onChangeEmail={onChangeEmail}
+              onChangePassword={onChangePassword}
+              onSubmit={onSubmit}
+            />
+            <RightText>
+              New to MyBoard? <Link to="/register">Create an Account</Link>
+            </RightText>
+          </Card>
+        </Col>
+        <Col xs={1} md={3} />
+      </Row>
+    </Container>
   );
 };
+
+const RightText = styled.p`
+  text-align: right;
+`;
 
 const mapStateToProps = (state) => {
   return {

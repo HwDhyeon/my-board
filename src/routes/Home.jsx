@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { logout } from '../app/store';
 
 const Home = ({ isLoggedIn, currentUser, toLogout }) => {
@@ -8,6 +8,9 @@ const Home = ({ isLoggedIn, currentUser, toLogout }) => {
     <div>
       <h1>Home</h1>
       <div>Hello {currentUser}</div>
+      <div>
+        <Link to="/board">Go to board</Link>
+      </div>
       <button onClick={toLogout}>Logout</button>
     </div>
   ) : (
